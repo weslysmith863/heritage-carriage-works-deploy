@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heritage Carriage Works - Login</title>
+</head>
+<body>
+<h1>Heritage Carriage Works</h1>
+<h2>Login</h2>
+
+<div th:if="${param.logout}">
+    <p style="color: green;">You have been logged out.</p>
+</div>
+<div th:if="${param.error}">
+    <p style="color: red;">Invalid username or password.</p>
+</div>
+
+<form th:action="@{/login}" method="post">
+    <p>
+        <label for="username">Username</label><br/>
+        <input type="text" id="username" name="username" />
+    </p>
+    <p>
+        <label for="password">Password</label><br/>
+        <input type="password" id="password" name="password" />
+    </p>
+    <p>
+        <input type="submit" value="Log In" />
+    </p>
+</form>
+</body>
+</html>
