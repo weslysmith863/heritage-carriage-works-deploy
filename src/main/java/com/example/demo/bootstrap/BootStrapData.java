@@ -1,8 +1,10 @@
 package com.example.demo.bootstrap;
 
+import com.example.demo.domain.Category;
 import com.example.demo.domain.OutsourcedPart;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
+import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.OutsourcedPartRepository;
 import com.example.demo.repositories.PartRepository;
 import com.example.demo.repositories.ProductRepository;
@@ -27,13 +29,16 @@ public class BootStrapData implements CommandLineRunner {
 
     private final PartRepository partRepository;
     private final ProductRepository productRepository;
-
     private final OutsourcedPartRepository outsourcedPartRepository;
+    private final CategoryRepository categoryRepository;
 
-    public BootStrapData(PartRepository partRepository, ProductRepository productRepository, OutsourcedPartRepository outsourcedPartRepository) {
+    public BootStrapData(PartRepository partRepository, ProductRepository productRepository,
+                         OutsourcedPartRepository outsourcedPartRepository,
+                         CategoryRepository categoryRepository) {
         this.partRepository = partRepository;
         this.productRepository = productRepository;
-        this.outsourcedPartRepository=outsourcedPartRepository;
+        this.outsourcedPartRepository = outsourcedPartRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -42,6 +47,15 @@ public class BootStrapData implements CommandLineRunner {
         List<OutsourcedPart> outsourcedParts=(List<OutsourcedPart>) outsourcedPartRepository.findAll();
         for(OutsourcedPart part:outsourcedParts){
             System.out.println(part.getName()+" "+part.getCompanyName());
+        }
+
+        // Seed categories if empty
+        if (categoryRepository.count() == 0) {
+            categoryRepository.save(new Category("Structural"));
+            categoryRepository.save(new Category("Hardware"));
+            categoryRepository.save(new Category("Upholstery"));
+            categoryRepository.save(new Category("Drivetrain"));
+            categoryRepository.save(new Category("Harnessing"));
         }
 
         // Seed 5 Parts and 5 Products if the database is empty
