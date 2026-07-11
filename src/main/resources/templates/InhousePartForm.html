@@ -33,6 +33,16 @@
 <p><label for="partId">Part ID</label><br/>
 <input type="text" th:field="*{partId}" class="form-control mb-4 col-4"/></p>
 
+<p><label for="categoryId">Category</label><br/>
+<select name="categoryId" id="categoryId" class="form-control mb-4 col-4">
+    <option value="">-- Select Category --</option>
+    <option th:each="cat : ${categories}"
+            th:value="${cat.id}"
+            th:text="${cat.name}"
+            th:selected="${inhousepart.category != null and inhousepart.category.id == cat.id}">
+    </option>
+</select></p>
+
     <div th:if="${#fields.hasAnyErrors()}">
     <ul class="text-danger">
         <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>

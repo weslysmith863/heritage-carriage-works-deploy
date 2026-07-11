@@ -35,6 +35,10 @@ public abstract class Part implements Serializable {
     @Min(value = 0, message = "Maximum inventory must be positive")
     int maxInv;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @ManyToMany
     @JoinTable(name="product_part", joinColumns = @JoinColumn(name="part_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))
@@ -107,6 +111,10 @@ public abstract class Part implements Serializable {
     public int getMaxInv() { return maxInv; }
 
     public void setMaxInv(int maxInv) { this.maxInv = maxInv; }
+
+    public Category getCategory() { return category; }
+
+    public void setCategory(Category category) { this.category = category; }
 
     public String toString(){
         return this.name;
